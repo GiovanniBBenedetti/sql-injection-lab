@@ -1,0 +1,19 @@
+{
+  "name": "sql-injection-lab",
+  "version": "1.0.0",
+  "description": "Aplicação vulnerável para estudo de SQL Injection",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mysql2": "^3.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
