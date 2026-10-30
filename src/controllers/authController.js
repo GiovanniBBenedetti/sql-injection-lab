@@ -1,4 +1,7 @@
 const pool = require("../config/database");
+const jwt = require("jsonwebtoken");
+
+const SECRET = process.env.JWT_SECRET || "jwt_secret_key";
 
 const login = (req, res) => {
   const { username, password } = req.body;
@@ -11,10 +14,16 @@ const login = (req, res) => {
     }
 
     if (results.length > 0) {
-      req.session.user = results[0];
+      const user = results[0];
+      const token = jwt.sign(
+        { id: user.id, username: user.username, role: user.role },
+        SECRET,
+        { expiresIn: "1h" }
+      );
       return res.status(200).json({
         message: "Login realizado com sucesso",
-        user: results[0],
+        token,
+        user,
       });
     }
 
@@ -23,7 +32,6 @@ const login = (req, res) => {
 };
 
 const logout = (req, res) => {
-  req.session.destroy();
   res.status(200).json({ message: "Logout realizado com sucesso" });
 };
 
