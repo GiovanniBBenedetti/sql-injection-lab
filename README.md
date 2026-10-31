@@ -135,7 +135,3 @@ GET /products/0 UNION SELECT 1, secret_key, secret_value, 4 FROM secrets-- -
 ```
 
 ---
-
-## Aviso
-
-Este projeto foi criado exclusivamente para fins educacionais. As vulnerabilidades são intencionais e servem para demonstrar como ataques de SQL Injection funcionam na prática.
