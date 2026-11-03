@@ -5,10 +5,10 @@ const list = (req, res) => {
 
   pool.query(query, (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.message });
+      return res.render("products/index", { products: [], error: err.message });
     }
 
-    return res.render("products/index", { products: results });
+    return res.render("products/index", { products: results, error: null });
   });
 };
 
