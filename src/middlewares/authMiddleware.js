@@ -4,15 +4,17 @@ const SECRET = process.env.JWT_SECRET || "jwt_secret_key";
 
 const requireAuth = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const tokenFromHeader = authHeader && authHeader.split(" ")[1];
+  const tokenFromCookie = req.cookies && req.cookies.token;
+  const token = tokenFromHeader || tokenFromCookie;
 
   if (!token) {
-    return res.status(401).json({ message: "Token não fornecido" });
+    return res.redirect("/login");
   }
 
   jwt.verify(token, SECRET, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: "Token inválido ou expirado" });
+      return res.redirect("/login");
     }
     req.user = decoded;
     next();

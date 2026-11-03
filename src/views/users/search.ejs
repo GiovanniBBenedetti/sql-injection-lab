@@ -1,0 +1,51 @@
+<%- include('../partials/header', { title: 'Busca de Usuários' }) %>
+
+  <div class="container">
+    <div class="page-title">
+      <h1>Busca de Usuários</h1>
+      <p>Parâmetro <code style="color:#e53935;">name</code> concatenado diretamente na query</p>
+    </div>
+
+    <div class="card">
+      <form method="GET" action="/users/search">
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" name="name" value="<%= query %>" placeholder="ex: admin" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </form>
+
+      <% if (sqlQuery) { %>
+        <div class="query-box">
+          <p>Query executada</p>
+          <code><%= sqlQuery %></code>
+        </div>
+      <% } %>
+
+      <% if (results && results.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuário</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% results.forEach(row => { %>
+              <tr>
+                <td><%= row.id %></td>
+                <td><%= row.username %></td>
+                <td><%= row.email %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else if (sqlQuery) { %>
+        <p style="margin-top:20px; color:#666;">Nenhum resultado encontrado.</p>
+      <% } %>
+    </div>
+  </div>
+
+</body>
+</html>

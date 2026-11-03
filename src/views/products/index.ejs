@@ -1,0 +1,22 @@
+<%- include('../partials/header', { title: 'Produtos' }) %>
+
+  <div class="container">
+    <div class="page-title">
+      <h1>Catálogo de Produtos</h1>
+      <p>Clique em um produto para acessar o endpoint vulnerável por ID</p>
+    </div>
+
+    <div class="product-grid">
+      <% products.forEach(product => { %>
+        <div class="product-card">
+          <h3><%= product.name %></h3>
+          <div class="price">R$ <%= Number(product.price).toFixed(2) %></div>
+          <div class="category"><%= product.category %></div>
+          <a href="/products/<%= product.id %>">Ver detalhes →</a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+</body>
+</html>
