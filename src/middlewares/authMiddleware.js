@@ -22,7 +22,10 @@ const requireAuth = (req, res, next) => {
 };
 
 const requireAdmin = (req, res, next) => {
-  if (!req.user || req.user.role !== "admin") {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+  if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Acesso negado" });
   }
   next();
