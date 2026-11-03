@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — SQLab</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container" style="max-width: 420px; margin-top: 80px;">
+    <div class="card">
+      <h2>SQLab</h2>
+      <p style="color:#666; font-size:0.85rem; margin-bottom:24px;">Laboratório de SQL Injection</p>
+
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="/login">
+        <div class="form-group">
+          <label>Usuário</label>
+          <input type="text" name="username" placeholder="admin" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" name="password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Entrar</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
