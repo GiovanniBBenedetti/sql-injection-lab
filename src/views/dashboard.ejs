@@ -1,0 +1,25 @@
+<%- include('partials/header', { title: 'Dashboard' }) %>
+
+  <div class="container">
+    <div class="page-title">
+      <h1>Bem-vindo, <%= user.username %></h1>
+      <p>Papel: <%= user.role %></p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;">
+      <div class="card">
+        <h2 style="font-size:1rem; margin-bottom:8px;">Busca de Usuários</h2>
+        <p style="color:#666; font-size:0.85rem; margin-bottom:16px;">Endpoint vulnerável a UNION injection</p>
+        <a href="/users/search" class="btn btn-secondary">Acessar</a>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size:1rem; margin-bottom:8px;">Catálogo de Produtos</h2>
+        <p style="color:#666; font-size:0.85rem; margin-bottom:16px;">Endpoint vulnerável por parâmetro de URL</p>
+        <a href="/products" class="btn btn-secondary">Acessar</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
