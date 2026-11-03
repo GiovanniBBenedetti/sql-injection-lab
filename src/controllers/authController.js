@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 
 const SECRET = process.env.JWT_SECRET || "jwt_secret_key";
 
+const showLogin = (req, res) => {
+  res.render("login", { error: null });
+};
+
 const login = (req, res) => {
   const { username, password } = req.body;
 
@@ -10,7 +14,7 @@ const login = (req, res) => {
 
   pool.query(query, (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.message, query });
+      return res.render("login", { error: err.message });
     }
 
     if (results.length > 0) {
@@ -20,19 +24,21 @@ const login = (req, res) => {
         SECRET,
         { expiresIn: "1h" }
       );
-      return res.status(200).json({
-        message: "Login realizado com sucesso",
-        token,
-        user,
-      });
+      res.cookie("token", token, { httpOnly: true });
+      return res.redirect("/dashboard");
     }
 
-    return res.status(401).json({ message: "Usuário ou senha inválidos" });
+    return res.render("login", { error: "Usuário ou senha inválidos" });
   });
 };
 
-const logout = (req, res) => {
-  res.status(200).json({ message: "Logout realizado com sucesso" });
+const showDashboard = (req, res) => {
+  res.render("dashboard", { user: req.user });
 };
 
-module.exports = { login, logout };
+const logout = (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/login");
+};
+
+module.exports = { showLogin, login, showDashboard, logout };
