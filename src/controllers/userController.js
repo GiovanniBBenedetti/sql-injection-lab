@@ -3,14 +3,18 @@ const pool = require("../config/database");
 const search = (req, res) => {
   const { name } = req.query;
 
-  const query = `SELECT id, username, email FROM users WHERE username LIKE '%${name}%'`;
+  if (!name && name !== "") {
+    return res.render("users/search", { results: null, sqlQuery: null, query: "" });
+  }
 
-  pool.query(query, (err, results) => {
+  const sqlQuery = `SELECT id, username, email FROM users WHERE username LIKE '%${name}%'`;
+
+  pool.query(sqlQuery, (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.message, query });
+      return res.render("users/search", { results: null, sqlQuery: err.message, query: name });
     }
 
-    return res.status(200).json({ results, query });
+    return res.render("users/search", { results, sqlQuery, query: name });
   });
 };
 
