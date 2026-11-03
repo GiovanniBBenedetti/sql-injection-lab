@@ -1,32 +1,29 @@
 const pool = require("../config/database");
 
 const list = (req, res) => {
-  const query = "SELECT id, name, description, price FROM products";
+  const query = "SELECT id, name, description, price, category FROM products";
 
   pool.query(query, (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
 
-    return res.status(200).json({ results });
+    return res.render("products/index", { products: results });
   });
 };
 
 const getById = (req, res) => {
   const { id } = req.params;
 
-  const query = `SELECT id, name, description, price FROM products WHERE id = ${id}`;
+  const sqlQuery = `SELECT id, name, description, price FROM products WHERE id = ${id}`;
 
-  pool.query(query, (err, results) => {
+  pool.query(sqlQuery, (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.message, query });
+      return res.render("products/show", { product: null, sqlQuery: err.message, id });
     }
 
-    if (results.length === 0) {
-      return res.status(404).json({ message: "Produto não encontrado" });
-    }
-
-    return res.status(200).json({ results, query });
+    const product = results.length > 0 ? results[0] : null;
+    return res.render("products/show", { product, sqlQuery, id });
   });
 };
 
