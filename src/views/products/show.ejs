@@ -1,0 +1,56 @@
+<%- include('../partials/header', { title: 'Produto' }) %>
+
+  <div class="container">
+    <div class="page-title">
+      <h1>Detalhe do Produto</h1>
+      <p>Parâmetro <code style="color:#e53935;">:id</code> concatenado diretamente na query</p>
+    </div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <form method="GET" action="" id="form-id">
+        <div class="form-group">
+          <label>ID do Produto</label>
+          <input type="text" name="id" value="<%= id %>" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <a href="/products" class="btn btn-secondary" style="margin-left:8px;">Voltar</a>
+      </form>
+    </div>
+
+    <% if (sqlQuery) { %>
+      <div class="query-box" style="margin-bottom:24px;">
+        <p>Query executada</p>
+        <code><%= sqlQuery %></code>
+      </div>
+    <% } %>
+
+    <% if (product) { %>
+      <div class="card">
+        <h2><%= product.name %></h2>
+        <p style="color:#aaa; margin: 12px 0;"><%= product.description %></p>
+        <div style="display:flex; gap:24px; margin-top:16px;">
+          <div>
+            <p style="color:#666; font-size:0.75rem; text-transform:uppercase;">Preço</p>
+            <p style="color:#e53935; font-weight:700; font-size:1.2rem;">R$ <%= Number(product.price).toFixed(2) %></p>
+          </div>
+          <div>
+            <p style="color:#666; font-size:0.75rem; text-transform:uppercase;">ID</p>
+            <p style="font-size:1.2rem;"><%= product.id %></p>
+          </div>
+        </div>
+      </div>
+    <% } else if (sqlQuery) { %>
+      <div class="alert alert-error">Nenhum produto encontrado para este ID.</div>
+    <% } %>
+  </div>
+
+  <script>
+    document.getElementById('form-id').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = this.querySelector('input[name="id"]').value;
+      window.location.href = '/products/' + id;
+    });
+  </script>
+
+</body>
+</html>
